@@ -1,5 +1,5 @@
 // Definir la URL base
-const baseURL = 'http://matiasgaspar.pythonanywhere.com';
+const baseURL = 'https://matiasgaspar.pythonanywhere.com';
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('enviar_btn').addEventListener('click', enviarArchivo);
