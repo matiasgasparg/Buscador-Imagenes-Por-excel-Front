@@ -24,7 +24,13 @@ function enviarArchivo() {
         if (response.ok) {
             document.getElementById('descargar_zip').disabled = false;
         } else {
-            console.error('Error al enviar el archivo:', response.status);
+            // Mostrar un mensaje de error en el frontend si el nombre de la columna no existe
+            if (response.status === 500) {
+                var mensaje = document.getElementById('mensaje');
+                mensaje.innerText = "No existe el nombre de la columna en el archivo";
+            } else {
+                console.error('Error al enviar el archivo:', response.status);
+            }
         }
         return response.json();
     })
@@ -44,6 +50,7 @@ var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
   modal.style.display = "none";
 }
+
 function descargarZip() {
     // Descargar el archivo ZIP
     fetch('https://matiasgaspar.pythonanywhere.com/descargar_zip')
