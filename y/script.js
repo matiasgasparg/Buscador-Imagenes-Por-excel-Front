@@ -12,7 +12,7 @@ function enviarArchivo() {
     form_data.append('archivo_excel', file_input);
     form_data.append('nombre_columna', nombre_columna);
 
-    fetch('http://127.0.0.1:5000/buscar_imagenes', {
+    fetch('http://matiasgaspar.pythonanywhere.com/buscar_imagenes', {
         method: 'POST',
         body: form_data
     })
@@ -37,7 +37,7 @@ function enviarArchivo() {
 
 function descargarZip() {
     // Descargar el archivo ZIP
-    fetch('http://127.0.0.1:5000/descargar_zip')
+    fetch('http://matiasgaspar.pythonanywhere.com/descargar_zip')
     .then(response => {
         if (response.ok) {
             return response.blob(); // Convertir la respuesta en un objeto Blob
@@ -56,14 +56,14 @@ function descargarZip() {
         window.URL.revokeObjectURL(url); // Liberar recursos
 
         // Después de descargar el archivo ZIP, llamar a eliminar_zip en el backend
-        fetch('http://127.0.0.1:5000/eliminar_zip')
+        fetch('http://matiasgaspar.pythonanywhere.com/eliminar_zip')
         .then(response => {
             if (response.ok) {
                 console.log('Archivo ZIP eliminado correctamente.');
                 document.getElementById('descargar_zip').disabled = true;
 
                 // Llamar a limpiar_downloads en el backend después de eliminar el archivo ZIP
-                fetch('http://127.0.0.1:5000/limpiar_downloads')
+                fetch('http://matiasgaspar.pythonanywhere.com/limpiar_downloads')
                 .then(response => {
                     if (response.ok) {
                         console.log('Contenido de la carpeta "downloads" eliminado correctamente.');
