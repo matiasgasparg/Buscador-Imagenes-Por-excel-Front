@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Imágenes</title>
+</head>
+<body>
+    <h1>Buscar Imágenes</h1>
+    <form id="formulario" enctype="multipart/form-data">
+        <input type="file" id="archivo_excel" name="archivo_excel" accept=".xlsx">
+        <input type="text" id="nombre_columna" name="nombre_columna" placeholder="Nombre de la columna">
+        <button type="button" id="enviar_btn">Enviar</button>
+    </form>
+    <button id="descargar_zip">Descargar ZIP</button>
+    <div id="mensaje"></div> <!-- Nuevo elemento para el mensaje -->
+    <script src="script.js"></script>
+</body>
+</html>
