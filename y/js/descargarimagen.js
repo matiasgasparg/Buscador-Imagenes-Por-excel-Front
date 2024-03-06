@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('enviar_btn').addEventListener('click', enviarArchivo);
     document.getElementById('descargar_zip').addEventListener('click', descargarZip);
     // Deshabilitar el botón de descarga al cargar la página
-    document.getElementById('descargar_zip').disabled = true;
+    document.getElementById('descargar_zip').disabled = false;
 });
 
 function enviarArchivo() {
@@ -22,17 +22,10 @@ function enviarArchivo() {
     })
     .then(response => {
         if (response.ok) {
-            document.getElementById('descargar_zip').disabled = false;
+            return response.json();
         } else {
-            // Mostrar un mensaje de error en el frontend si el nombre de la columna no existe
-            if (response.status === 500) {
-                var mensaje = document.getElementById('mensaje');
-                mensaje.innerText = "No existe el nombre de la columna en el archivo";
-            } else {
-                console.error('Error al enviar el archivo:', response.status);
-            }
+            throw new Error('Error al enviar el archivo');
         }
-        return response.json();
     })
     .then(data => {
         console.log(data);
@@ -42,7 +35,14 @@ function enviarArchivo() {
         // Ocultar el modal después de completar la solicitud
         modal.style.display = "none";
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error al enviar el archivo:', error);
+        // Mostrar un mensaje de error en el frontend si el nombre de la columna no existe
+        var mensaje = document.getElementById('mensaje');
+        mensaje.innerText = "No existe el nombre de la columna en el archivo";
+        // Ocultar el modal en caso de error
+        modal.style.display = "none";
+    });
 }
 
 // Obtener el elemento para cerrar el modal y ocultarlo al hacer clic en la "x"
@@ -50,7 +50,6 @@ var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
   modal.style.display = "none";
 }
-
 function descargarZip() {
     // Descargar el archivo ZIP
     fetch('https://matiasgaspar.pythonanywhere.com/descargar_zip')
